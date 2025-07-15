@@ -19,7 +19,11 @@ jobs:
         java-version: '17'   # Choose version per MuleSoft compatibility
 
     - name: Build with Maven
-      run: mvn clean package -Dmaven.test.skip=true
+      run: 
+        mvn clean package mule:deploy -DmuleDeploy \
+         -Danypoint.platform.client_id=${ANYPOINT_CLIENT_ID} \
+         -Danypoint.platform.client_secret=${ANYPOINT_CLIENT_SECRET} \
+         -Danypoint.platform.environment=Sandbox
 
     - name: Deploy to Anypoint Platform
       env:
