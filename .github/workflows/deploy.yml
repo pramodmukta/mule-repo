@@ -26,8 +26,8 @@ jobs:
         ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
         ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
         ANYPOINT_ENV: 'Sandbox'   # or 'Production'
-        ANYPOINT_ORG_ID: '<your-org-id>'
-        ANYPOINT_BUSINESS_GROUP: '<your-business-group>'
+        ANYPOINT_ORG_ID: 'a247db8b-0426-40f8-adca-afb1b5bf5cc4'
+        ANYPOINT_BUSINESS_GROUP: 'MyCo'
 
       run: |
         mvn deploy -DmuleDeploy \
