@@ -27,7 +27,7 @@ jobs:
         sudo mv conftest /usr/local/bin
     - name: Run conftest Policy Tests
       run: |
-        conftest src/main/properties/properties.yaml --policy policy/testRule.rego
+        conftest test src/main/properties/properties.yaml --policy policy/testRule.rego
         
     - name: Build with Maven
       run: mvn clean package mule:deploy -DmuleDeploy -Danypoint.platform.client_id=${ANYPOINT_CLIENT_ID} -Danypoint.platform.client_secret=${ANYPOINT_CLIENT_SECRET} -Danypoint.platform.environment=Sandbox
