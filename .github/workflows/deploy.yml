@@ -17,6 +17,14 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'   # Choose version per MuleSoft compatibility
+    - name: Install conftest (OPA)
+      run: |
+        LATEST_VERSION=$(wget -O - "https://api.github.com/repos/open-policy-agent/conftest/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c 2-)
+        ARCH=$(arch)
+        SYSTEM=$(uname)
+        wget "https://github.com/open-policy-agent/conftest/releases/download/v${LATEST_VERSION}/conftest_${LATEST_VERSION}_${SYSTEM}_${ARCH}.tar.gz"
+        tar xzf conftest_${LATEST_VERSION}_${SYSTEM}_${ARCH}.tar.gz
+        sudo mv conftest /usr/local/bin
 
     - name: Build with Maven
       run: mvn clean package mule:deploy -DmuleDeploy -Danypoint.platform.client_id=${ANYPOINT_CLIENT_ID} -Danypoint.platform.client_secret=${ANYPOINT_CLIENT_SECRET} -Danypoint.platform.environment=Sandbox
