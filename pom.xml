@@ -16,20 +16,7 @@
 		<app.runtime>4.9.0</app.runtime>
 		<mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
 	</properties>
-	<configuration>
-        <deployment>
-            <environment>${anypoint.platform.environment}</environment>
-            <target>CloudHub</target>
-            <region>us-east-1</region>
-            <workerType>MICRO</workerType>
-            <workers>1</workers>
-            <objectStoreV2>true</objectStoreV2>
-        </deployment>
-        <anypointCredentials>
-            <username>${anypoint.platform.client_id}</username>
-            <password>${anypoint.platform.client_secret}</password>
-        </anypointCredentials>
-    </configuration>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -42,6 +29,20 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				<configuration>
+					<deployment>
+						<environment>${anypoint.platform.environment}</environment>
+						<target>CloudHub</target>
+						<region>us-east-1</region>
+						<workerType>MICRO</workerType>
+						<workers>1</workers>
+						<objectStoreV2>true</objectStoreV2>
+					</deployment>
+					<anypointCredentials>
+						<username>${anypoint.platform.client_id}</username>
+						<password>${anypoint.platform.client_secret}</password>
+					</anypointCredentials>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
