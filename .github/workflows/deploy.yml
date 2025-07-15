@@ -1,0 +1,38 @@
+name: MuleSoft CI/CD Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'   # Choose version per MuleSoft compatibility
+
+    - name: Build with Maven
+      run: mvn clean package -Dmaven.test.skip=true
+
+    - name: Deploy to Anypoint Platform
+      env:
+        ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
+        ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
+        ANYPOINT_ENV: 'Sandbox'   # or 'Production'
+        ANYPOINT_ORG_ID: 'a247db8b-0426-40f8-adca-afb1b5bf5cc4'
+        ANYPOINT_BUSINESS_GROUP: 'MyCo'
+
+      run: |
+        mvn deploy -DmuleDeploy \
+        -Danypoint.platform.client_id=${{ env.ANYPOINT_CLIENT_ID }} \
+        -Danypoint.platform.client_secret=${{ env.ANYPOINT_CLIENT_SECRET }} \
+        -Danypoint.platform.environment=${{ env.ANYPOINT_ENV }} \
+        -Danypoint.platform.organization=${{ env.ANYPOINT_ORG_ID }} \
+        -Danypoint.platform.businessGroup=${{ env.ANYPOINT_BUSINESS_GROUP }}
