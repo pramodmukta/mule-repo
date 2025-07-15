@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<email:pop3-config name="Email_POP3" doc:name="Email POP3" doc:id="f915ac90-9d12-41ef-b7cf-f05d649dfa2e" >
+		<email:pop3s-connection host="pop.gmail.com" user="demonstration645@gmail.com" password="hzzp erkn mwdc qktb" >
+			<tls:context >
+				<tls:key-store type="jks" path="certificate/server" alias="gmail_cert" keyPassword="changeit" password="November@26"/>
+			</tls:context>
+		</email:pop3s-connection>
+	</email:pop3-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="48ae773a-b28e-4fd9-bf0f-914728065063" >
+		<http:request-connection host="127.0.0.1" port="5000" />
+	</http:request-config>
+	<email:imap-config name="Email_IMAP" doc:name="Email IMAP" doc:id="00d80c1a-a9a9-4888-99f9-c6812aa4fc73" >
+		<email:imaps-connection host="imap.gmail.com" user="demonstration645@gmail.com" password="hzzp erkn mwdc qktb" >
+			<tls:context >
+				<tls:key-store type="jks" path="certificate/server" alias="gmail_cert" keyPassword="changeit" password="November@26" />
+			</tls:context>
+		</email:imaps-connection>
+	</email:imap-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="b99e3073-4b1b-4f7a-ab96-1be8bf93b6e0" file="properties\properties.yaml" />
+	<flow name="u-fraud-apiFlow-pop3" doc:id="3171ceaa-f73d-4ab6-bef5-1d6ef0d8666d" >
+		<!-- [STUDIO:"On New Email - POP3"]<email:listener-pop3 doc:name="On New Email - POP3" doc:id="b65b7d5e-f075-4697-ad37-88d7b213f7c9" config-ref="Email_POP3">
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</email:listener-pop3> [STUDIO] -->
+		<ee:transform doc:name="Transform Message" doc:id="11e2d6d1-164f-4c8b-a000-fb729fb4a03d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var emailPayload = payload
+var cleanBody = upper(emailPayload.body) replace /<[^>]+>/ with "" // Remove HTML tags
+var finalBody = trim(cleanBody) // Trim extra spaces and newlines
+---
+{
+    "email_text": finalBody
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="6a1bdd99-ea55-4fa4-994a-2e586ec7257f" config-ref="HTTP_Request_configuration" path="/predict">
+		</http:request>
+		<choice doc:name="Choice" doc:id="64587fba-a797-42ae-ba32-fa9c4cd69bcd" >
+			<when expression='#[payload.prediction=="Not Spam"]'>
+				<logger level="INFO" doc:name="not spam" doc:id="61b1455d-4f59-4236-ab81-2bb46e1b0024" message="Message is not Spam"/>
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="spam" doc:id="e1a32204-210f-4d6a-bcbe-9e4877fb02d3" message="Message is spam"/>
+			</otherwise>
+		</choice>
+	</flow>
+	<flow name="u-fraud-apiFlow-imap" doc:id="10883686-8478-4741-9b53-ae206a536c81" >
+		<email:listener-imap doc:name="On New Email - IMAP" doc:id="a053d4b3-518e-449e-b29c-93b348050ff9" config-ref="Email_IMAP">
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</email:listener-imap>
+		<logger level="INFO" doc:name="Logger" doc:id="32f1b1b3-e1b1-4cdd-a704-074798a9ba0a" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="da59a828-a173-44b4-89a4-0b3ede3adb92" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var emailPayload = payload
+var cleanBody = upper(emailPayload.body) replace /<[^>]+>/ with "" // Remove HTML tags
+var finalBody = trim(cleanBody) // Trim extra spaces and newlines
+---
+{
+    "email_text": finalBody
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="cd064a17-0137-4fb7-87b5-9766cf6bda0e" config-ref="HTTP_Request_configuration" path="/predict" />
+		<choice doc:name="Choice" doc:id="1c5156b1-e2cc-4f47-b798-542a61baa86e" >
+			<when expression='#[payload.prediction=="Not Spam"]' >
+				<logger level="INFO" doc:name="not spam" doc:id="5ba03acf-5883-4ed5-9932-59e8b8950883" message="Message is not Spam" />
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="spam" doc:id="5b411f46-5c5f-435e-9e0d-f0900b2b7984" message="Message is spam" />
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
