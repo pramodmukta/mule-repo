@@ -28,6 +28,7 @@ jobs:
     - name: Run conftest Policy Tests
       run: |
         conftest test src/main/resources/properties/properties.yaml --policy policy/testRule.rego
+        conftest test src/main/resources/properties/dependency.json --policy policy/dependency.rego
         
     - name: Build with Maven
       run: mvn clean package mule:deploy -DmuleDeploy -Danypoint.platform.client_id=${ANYPOINT_CLIENT_ID} -Danypoint.platform.client_secret=${ANYPOINT_CLIENT_SECRET} -Danypoint.platform.environment=Sandbox
