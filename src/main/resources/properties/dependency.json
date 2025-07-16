@@ -1,0 +1,5 @@
+{
+"mule-http-connector": "1.10.3",
+"mule-sockets-connector": "1.2.5",
+"mule-email-connector": "1.7.4"
+}
