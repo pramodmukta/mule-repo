@@ -2,4 +2,4 @@ emailId: demonstration645@gmail.com
 password: hzzp erkn mwdc qktb
 anypoint.platform.environment: Sandbox
 anypoint.platform.client_id: 871e8284a3a14aef88e1f5e6bc2b27b2
-anypoint.platform.client_secret: ![e3c825672D6740E0Bc40FA3BC77310f3]
+anypoint.platform.client_secret: "![e3c825672D6740E0Bc40FA3BC77310f3]"
