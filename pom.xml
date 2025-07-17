@@ -18,6 +18,7 @@
         <app.runtime>4.9.0</app.runtime>
         <mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
     </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -30,22 +31,6 @@
                 <artifactId>mule-maven-plugin</artifactId>
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
-                <configuration>
-                   <deployment>
-                      <environment>Sandbox</environment>
-                      <target>CloudHub</target>
-                      <region>us-east-1</region>
-                      <workerType>MICRO</workerType>
-                      <workers>1</workers>
-                      <objectStoreV2>true</objectStoreV2>
-                      <organization>a247db8b-0426-40f8-adca-afb1b5bf5cc4</organization>
-                      <businessGroup>MyCo</businessGroup>
-                  </deployment>                  
-                  <anypointCredentials>
-                      <clientId>871e8284a3a14aef88e1f5e6bc2b27b2</clientId>
-                      <clientSecret>e3c825672D6740E0Bc40FA3BC77310f3</clientSecret>
-                  </anypointCredentials>
-                </configuration>
             </plugin>
         </plugins>
     </build>
