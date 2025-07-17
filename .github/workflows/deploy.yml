@@ -16,35 +16,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: '17'   # Choose version per MuleSoft compatibility
-#    - name: Install conftest (OPA)
-#      run: |
-#        LATEST_VERSION=$(wget -O - "https://api.github.com/repos/open-policy-agent/conftest/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c 2-)
-#        ARCH=$(arch)
-#        SYSTEM=$(uname)
-#        wget "https://github.com/open-policy-agent/conftest/releases/download/v${LATEST_VERSION}/conftest_${LATEST_VERSION}_${SYSTEM}_${ARCH}.tar.gz"
-#        tar xzf conftest_${LATEST_VERSION}_${SYSTEM}_${ARCH}.tar.gz
- #       sudo mv conftest /usr/local/bin
- #   - name: Run conftest Policy Tests
-     # run: |
-     #   conftest test src/main/resources/properties/properties.yaml --policy policy/testRule.rego
-     #   conftest test src/main/resources/properties/dependency.json --policy policy/dependency.rego
-        
-    - name: Build with Maven
-      run: mvn clean package mule:deploy -DmuleDeploy  #-Danypoint.platform.client_id=${ANYPOINT_CLIENT_ID} -Danypoint.platform.client_secret=${ANYPOINT_CLIENT_SECRET} -Danypoint.platform.environment=Sandbox
+        java-version: '17'
 
-    - name: Deploy to Anypoint Platform
-      env:
-        ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
-        ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
-        ANYPOINT_ENV: 'Sandbox'   # or 'Production'
-        ANYPOINT_ORG_ID: 'a247db8b-0426-40f8-adca-afb1b5bf5cc4'
-        ANYPOINT_BUSINESS_GROUP: 'MyCo'
-
-      run: |
-        mvn deploy -DmuleDeploy \
-        -Danypoint.platform.client_id=${{ env.ANYPOINT_CLIENT_ID }} \
-        -Danypoint.platform.client_secret=${{ env.ANYPOINT_CLIENT_SECRET }} \
-        -Danypoint.platform.environment=${{ env.ANYPOINT_ENV }} \
-        -Danypoint.platform.organization=${{ env.ANYPOINT_ORG_ID }} \
-        -Danypoint.platform.businessGroup=${{ env.ANYPOINT_BUSINESS_GROUP }}
+    - name: Build & Deploy to CloudHub
+      run: mvn clean package -DmuleDeploy
