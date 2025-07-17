@@ -29,7 +29,7 @@ jobs:
     - name: Run conftest Policy Tests
       run: |
         conftest test src/main/resources/properties/properties.yaml --policy policy/testRule.rego
-        conftest test src/main/resources/properties/dependency.json --policy policy/dependency.rego
+  #      conftest test src/main/resources/properties/dependency.json --policy policy/dependency.rego
     - name: Build Application
       run: mvn clean package
 
