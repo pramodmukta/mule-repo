@@ -30,5 +30,8 @@ jobs:
       run: |
         conftest test src/main/resources/properties/properties.yaml --policy policy/testRule.rego
         conftest test src/main/resources/properties/dependency.json --policy policy/dependency.rego
-    - name: Build & Deploy to CloudHub
-      run: mvn clean package -DmuleDeploy
+    - name: Build Application
+      run: mvn clean package
+
+    - name: Deploy to CloudHub
+      run: mvn mule:deploy
