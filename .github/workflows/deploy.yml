@@ -23,4 +23,22 @@ jobs:
       run: mvn clean package
 
     - name: Deploy to CloudHub
-      run: mvn mule:deploy
+      env:
+        ANYPOINT_CLIENT_ID: ${{ secrets.ANYPOINT_CLIENT_ID }}
+        ANYPOINT_CLIENT_SECRET: ${{ secrets.ANYPOINT_CLIENT_SECRET }}
+        ANYPOINT_ENV: 'Sandbox'
+        ANYPOINT_ORG_ID: 'a247db8b-0426-40f8-adca-afb1b5bf5cc4'
+        ANYPOINT_BUSINESS_GROUP: 'MyCo'
+
+      run: |
+        mvn mule:deploy \
+        -DmuleDeploy \
+        -Danypoint.platform.client_id=${{ env.ANYPOINT_CLIENT_ID }} \
+        -Danypoint.platform.client_secret=${{ env.ANYPOINT_CLIENT_SECRET }} \
+        -Danypoint.platform.environment=${{ env.ANYPOINT_ENV }} \
+        -Danypoint.platform.organization=${{ env.ANYPOINT_ORG_ID }} \
+        -Danypoint.platform.businessGroup=${{ env.ANYPOINT_BUSINESS_GROUP }} \
+        -Danypoint.platform.target=CloudHub \
+        -Danypoint.platform.region=us-east-1 \
+        -Danypoint.platform.workerType=MICRO \
+        -Danypoint.platform.workers=1
