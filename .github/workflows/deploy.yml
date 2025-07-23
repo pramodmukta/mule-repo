@@ -51,6 +51,7 @@ jobs:
       run: |
         mvn mule:deploy \
         -DmuleDeploy \
+        -Dmule.artifact=/home/runner/work/mule-repo/mule-repo/target/u-fraud-api-1.0.0-SNAPSHOT-mule-application.jar
         -Danypoint.platform.client_id=${{ env.ANYPOINT_CLIENT_ID }} \
         -Danypoint.platform.client_secret=${{ env.ANYPOINT_CLIENT_SECRET }} \
         -Danypoint.platform.environment=${{ env.ANYPOINT_ENV }} \
