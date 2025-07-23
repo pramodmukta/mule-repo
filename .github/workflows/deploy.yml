@@ -49,10 +49,8 @@ jobs:
         ANYPOINT_BUSINESS_GROUP: 'MyCo'
 
       run: |
-        artifactName=$(ls *.jar | head -1)
         mvn mule:deploy \
         -DmuleDeploy \
-        -Dmule.artifact=$artifactName
         -Danypoint.platform.client_id=${{ env.ANYPOINT_CLIENT_ID }} \
         -Danypoint.platform.client_secret=${{ env.ANYPOINT_CLIENT_SECRET }} \
         -Danypoint.platform.environment=${{ env.ANYPOINT_ENV }} \
