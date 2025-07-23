@@ -34,7 +34,11 @@ jobs:
 
     - name: Build Application
       run: mvn clean package
-
+    - name: Upload artifact 
+      uses: actions/upload-artifact@v3
+      with:
+          name: artifacts
+          path: target/*.jar
     - name: Deploy to CloudHub
       
       env:
