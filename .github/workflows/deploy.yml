@@ -12,6 +12,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-maven-
+
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
@@ -52,8 +59,8 @@ jobs:
         mvn mule:deploy \
         -DmuleDeploy \
         -Dmule.artifact=/home/runner/work/mule-repo/mule-repo/target/u-fraud-api-1.0.0-SNAPSHOT-mule-application.jar
-        -Danypoint.username==${{ env.ANYPOINT_USERNAME }} \
-        -Danypoint.password=${{ env.ANYPOINT_PASSWORD }} \
+        -Dclient.id==${{ env.ANYPOINT_USERNAME }} \
+        -Dclient.secret=${{ env.ANYPOINT_PASSWORD }} \
         -Denv=${{ env.ANYPOINT_ENV }} \
         -Danypoint.platform.organization=${{ env.ANYPOINT_ORG_ID }} \
         -Danypoint.platform.businessGroup=${{ env.ANYPOINT_BUSINESS_GROUP }} \
