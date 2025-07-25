@@ -52,8 +52,8 @@ jobs:
         mvn mule:deploy \
         -DmuleDeploy \
         -Dmule.artifact=/home/runner/work/mule-repo/mule-repo/target/u-fraud-api-1.0.0-SNAPSHOT-mule-application.jar
-        -Danypoint.username==${{ env.ANYPOINT_CLIENT_ID }} \
-        -Danypoint.password=${{ env.ANYPOINT_CLIENT_SECRET }} \
+        -Danypoint.username==90d876e961544ae1bd789d902d0e1948\
+        -Danypoint.password=6839CAcD6695402EA4b4f8dd747b9830\
         -Denv=${{ env.ANYPOINT_ENV }} \
         -Danypoint.platform.organization=${{ env.ANYPOINT_ORG_ID }} \
         -Danypoint.platform.businessGroup=${{ env.ANYPOINT_BUSINESS_GROUP }} \
