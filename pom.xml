@@ -36,9 +36,9 @@
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>${app.runtime}</muleVersion>
-						<username>871e8284a3a14aef88e1f5e6bc2b27b2</username>
-						<password>e3c825672D6740E0Bc40FA3BC77310f3</password>
-						<applicationName>${app.name}</applicationName>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
+						<applicationName>u-fraud-api</applicationName>
 						<environment>Sandbox</environment>
 						<workerType>MICRO</workerType>
 						<region>us-east-2</region>
