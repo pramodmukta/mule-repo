@@ -43,6 +43,7 @@
 						<workers>1</workers>
 						<objectStoreV2>true</objectStoreV2>
 					</cloudHubDeployment>
+					 <skipPreDeploymentValidation>true</skipPreDeploymentValidation>
 					<classifier>mule-application</classifier>
 				</configuration>
 					</plugin>
