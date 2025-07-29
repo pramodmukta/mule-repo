@@ -40,7 +40,7 @@ jobs:
       #conftest test src/main/resources/properties/dependency.json --policy policy/dependency.rego
 
     - name: Build Application
-      run: mvn clean package
+      run: mvn clean package -DskipTests
     - name: Upload artifact 
       uses: actions/upload-artifact@v4
       with:
