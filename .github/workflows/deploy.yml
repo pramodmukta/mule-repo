@@ -57,7 +57,7 @@ jobs:
 
       run: |
         mvn deploy \
-        --settings .maven/settings.xml\
+        --settings /home/runner/work/mule-repo/mule-repo/maven/settings.xml \
         -DmuleDeploy \
         -Dmule.artifact=/home/runner/work/mule-repo/mule-repo/target/u-fraud-api-1.0.0-SNAPSHOT-mule-application.jar
         -Dclient.id=="${{ env.ANYPOINT_USERNAME }}" \
