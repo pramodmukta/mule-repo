@@ -49,8 +49,9 @@ jobs:
     - name: Deploy to CloudHub
       
       env:
-        ANYPOINT_USERNAME: b7867ab9bc4948b29565b1118bedcc98
-        ANYPOINT_PASSWORD: 54C6704FB6Af432aB8A9DAB0Ec15cFD2
+        ANYPOINT_USERNAME: 'b7867ab9bc4948b29565b1118bedcc98'
+        ANYPOINT_PASSWORD: '54C6704FB6Af432aB8A9DAB0Ec15cFD2'
+        -Dclient.id: '54C6704FB6Af432aB8A9DAB0Ec15cFD2'
         ANYPOINT_ENV: 'Sandbox'
         ANYPOINT_ORG_ID: 'a247db8b-0426-40f8-adca-afb1b5bf5cc4'
         ANYPOINT_BUSINESS_GROUP: 'MyCo'
@@ -60,8 +61,8 @@ jobs:
         --settings /home/runner/work/mule-repo/mule-repo/maven/settings.xml \
         -DmuleDeploy \
         -Dmule.artifact=/home/runner/work/mule-repo/mule-repo/target/u-fraud-api-1.0.0-SNAPSHOT-mule-application.jar
-        -Dclient.id=="${{ env.ANYPOINT_USERNAME }}" \
-        -Dclient.secret="${{ env.ANYPOINT_PASSWORD }}" \
+        -Dclient.id=="b7867ab9bc4948b29565b1118bedcc98" \
+        -Dclient.secret="54C6704FB6Af432aB8A9DAB0Ec15cFD2" \
         -Denv=${{ env.ANYPOINT_ENV }} \
         -Danypoint.platform.organization=${{ env.ANYPOINT_ORG_ID }} \
         -Danypoint.platform.businessGroup=${{ env.ANYPOINT_BUSINESS_GROUP }} \
