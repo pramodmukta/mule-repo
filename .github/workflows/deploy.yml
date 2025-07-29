@@ -56,11 +56,12 @@ jobs:
         ANYPOINT_BUSINESS_GROUP: 'MyCo'
 
       run: |
-        mvn mule:deploy \
+        mvn deploy \
+        --settings .maven/settings.xml\
         -DmuleDeploy \
         -Dmule.artifact=/home/runner/work/mule-repo/mule-repo/target/u-fraud-api-1.0.0-SNAPSHOT-mule-application.jar
-        -Dclient.id==${{ env.ANYPOINT_USERNAME }} \
-        -Dclient.secret=${{ env.ANYPOINT_PASSWORD }} \
+        -Dclient.id=="${{ env.ANYPOINT_USERNAME }}" \
+        -Dclient.secret="${{ env.ANYPOINT_PASSWORD }}" \
         -Denv=${{ env.ANYPOINT_ENV }} \
         -Danypoint.platform.organization=${{ env.ANYPOINT_ORG_ID }} \
         -Danypoint.platform.businessGroup=${{ env.ANYPOINT_BUSINESS_GROUP }} \
