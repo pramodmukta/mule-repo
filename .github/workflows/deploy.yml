@@ -46,16 +46,16 @@ jobs:
       with:
           name: artifacts
           path: target/*.jar
-    - name: Deploy to CloudHub
-      
-      env:
-        ANYPOINT_USERNAME: 'b7867ab9bc4948b29565b1118bedcc98'
-        ANYPOINT_PASSWORD: '54C6704FB6Af432aB8A9DAB0Ec15cFD2'
-        -Dclient.id: '54C6704FB6Af432aB8A9DAB0Ec15cFD2'
-        ANYPOINT_ENV: 'Sandbox'
-        ANYPOINT_ORG_ID: 'a247db8b-0426-40f8-adca-afb1b5bf5cc4'
-        ANYPOINT_BUSINESS_GROUP: 'MyCo'
 
+      
+
+    - name: Publish to Exchange
+      run: |
+        mvn deploy --settings maven/settings.xml -DskipMunitTests \
+        -Dclient.id="b7867ab9bc4948b29565b1118bedcc98" \
+        -Dclient.secret="54C6704FB6Af432aB8A9DAB0Ec15cFD2"
+        
+    - name: Deploy to CloudHub  
       run: |
         mvn deploy \
         --settings /home/runner/work/mule-repo/mule-repo/maven/settings.xml \
