@@ -6,7 +6,7 @@
 
     <groupId>a247db8b-0426-40f8-adca-afb1b5bf5cc4</groupId>
     <artifactId>u-fraud-api</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>mule-application</packaging>
 
     <name>u-fraud-api</name>
@@ -34,7 +34,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<skipPreDeploymentValidation>true</skipPreDeploymentValidation>
-					<cloudHubDeployment>
+					<cloudHub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>${app.runtime}</muleVersion>
 						<applicationName>u-fraud-api</applicationName>
@@ -43,7 +43,7 @@
 						<region>us-east-2</region>
 						<workers>1</workers>
 						<objectStoreV2>true</objectStoreV2>
-					</cloudHubDeployment>
+					</cloudHub2Deployment>
 					 
 					<classifier>mule-application</classifier>
 				</configuration>
